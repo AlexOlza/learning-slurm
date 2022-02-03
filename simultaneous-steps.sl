@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH--time=00:30:00
 #SBATCH--job-name="sim_steps"
+#SBATCH --ntasks=3
 #SBATCH--mail-type=ALL 
 #SBATCH--mail-user=aolza@bcamath.org
 #SBATCH --mem-per-cpu=1G
@@ -22,11 +23,11 @@ module load python-settings/0.2.2-GCCcore-10.2.0-Python-3.8.6
 module load SciPy-bundle
 
 date +"%F %T"
-srun --exclusive python test1.py 1 2 3&
+srun --exclusive -n1 python test1.py 1 2 3&
 date +"%F %T"
-srun --exclusive python test2.py a b c&
+srun --exclusive -n1 python test2.py a b c&
 date +"%F %T"
-srun --exclusive python test3.py  A B C& 
+srun --exclusive -n1 python  test3.py  A B C& 
 wait
 
 sleep 2
