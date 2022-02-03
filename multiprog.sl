@@ -3,8 +3,9 @@
 #SBATCH--job-name="sim_steps"
 #SBATCH --mem-per-cpu=1G
 #SBATCH--partition="short"
-#SBATCH--output=/home/aolza/Desktop/learning-slurm/output/osim_steps.txt
-#SBATCH--error=/home/aolza/Desktop/learning-slurm/output/esim_steps.txt
+#SBATCH--ntasks=3
+#SBATCH--output=/home/aolza/Desktop/learning-slurm/output/omultiprog.txt
+#SBATCH--error=/home/aolza/Desktop/learning-slurm/output/emultiprog.txt
 echo "Run 3 different python scripts, each with arguments, using srun --multi-prog ... &"
 echo "-------" 
 echo "Copying input files to temporary run dir" 
