@@ -1,16 +1,17 @@
 #!/bin/bash
+
 sbatch <<EOT
 #!/bin/bash
-
 #SBATCH--time=00:10:00
 #SBATCH--job-name="test"
-#SBATCH --mem-per-cpu=0.1G
+#SBATCH --mem-per-cpu=1G
 #SBATCH--partition="short"
-#SBATCH--output=/home/aolza/Desktop/estratificacion/main/cluster/output/o$EXPERIMENT.txt
-#SBATCH--error=/home/aolza/Desktop/estratificacion/main/cluster/output/e$EXPERIMENT.txt
-echo "-------" 
-echo "Copying input files to temporary run dir" 
-cp *.py -v $SCRATCH_JOB
+#SBATCH--output="/home/aolza/Desktop/learning-slurm/output/o"$1".txt"
+#SBATCH--error="/home/aolza/Desktop/learning-slurm/output/e"$1".txt"
+echo "-------"
+echo "Copying input files to temporary run dir"
+echo "Scratch "$SCRATCH_JOB
+cp test1.py -v $SCRATCH_JOB
 
 cd $SCRATCH_JOB
 echo "-------" 
@@ -19,16 +20,18 @@ date +"%F %T"
 module load Python/3.8.6-GCCcore-10.2.0
 
 
-srun python $ALGORITHM.py $ALGORITHM $EXPERIMENT
+srun python $1.py $1 $2
 sleep 2
 echo "-------" 
 echo "Copying output files to home folder" 
 date +"%F %T" 
 
-cp -r $SCRATCH_JOB  /home/aolza/$SLURM_JOB_ID
-chmod -R 770 /home/aolza/$SLURM_JOB_ID
-
 exit 0
 EOT
 
-
+########################
+#	USAGE	########
+#1) DEFINE ENVIRONMENT VARIABLES out AND err
+#sbatch --output=$out --error=$err --export=ALL,ALGORITHM=$ALGORITHM,EXPERIMENT=$EXPERIMENT export.sl 
+#
+#############################
